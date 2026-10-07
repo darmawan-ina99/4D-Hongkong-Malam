@@ -1,0 +1,2835 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Mr. Aina Predictor specialized 4D</title>
+
+<style>
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:#07111f;
+  color:#eaf2ff;
+}
+
+header{
+  padding:18px;
+  background:linear-gradient(135deg,#0d2038,#102e4f);
+  border-bottom:1px solid #24486e;
+  position:sticky;
+  top:0;
+  z-index:10;
+}
+
+header h1{
+  margin:0;
+  font-size:22px;
+}
+
+header p{
+  margin:6px 0 0;
+  color:#8fa8c3;
+  font-size:13px;
+}
+
+.badge{
+  display:inline-block;
+  padding:4px 10px;
+  border-radius:20px;
+  background:#1d4ed8;
+  font-size:11px;
+  letter-spacing:1px;
+  vertical-align:middle;
+  margin-left:8px;
+}
+
+.container{
+  max-width:1200px;
+  margin:auto;
+  padding:14px;
+}
+
+.card{
+  background:#0c1a2b;
+  border:1px solid #1d3855;
+  border-radius:14px;
+  padding:15px;
+  margin-bottom:14px;
+  box-shadow:0 5px 18px rgba(0,0,0,.18);
+}
+
+.card h2{
+  margin:0 0 12px;
+  font-size:17px;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
+}
+
+@media(max-width:800px){
+  .grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+}
+
+@media(max-width:500px){
+  .grid{
+    grid-template-columns:1fr;
+  }
+}
+
+label{
+  display:block;
+  color:#91a8bf;
+  font-size:12px;
+  margin-bottom:5px;
+}
+
+.checkline{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  margin-top:8px;
+  color:#91a8bf;
+  font-size:12px;
+}
+
+.checkline input{
+  width:auto;
+  accent-color:#1769aa;
+}
+
+input,select,textarea{
+  width:100%;
+  background:#071321;
+  color:#fff;
+  border:1px solid #294763;
+  border-radius:9px;
+  padding:11px;
+  outline:none;
+}
+
+textarea{
+  min-height:110px;
+  resize:vertical;
+}
+
+input:focus,
+select:focus,
+textarea:focus{
+  border-color:#4ea3ff;
+}
+
+button{
+  border:0;
+  border-radius:9px;
+  padding:11px 14px;
+  background:#1769aa;
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+  margin:3px;
+}
+
+button:hover{
+  filter:brightness(1.15);
+}
+
+button.secondary{
+  background:#26394e;
+}
+
+button.success{
+  background:#177c56;
+}
+
+button.warning{
+  background:#93600d;
+}
+
+button.danger{
+  background:#8d2931;
+}
+
+.actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:5px;
+  margin-top:10px;
+}
+
+.statgrid{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:8px;
+}
+
+@media(max-width:700px){
+  .statgrid{
+    grid-template-columns:repeat(2,1fr);
+  }
+}
+
+.stat{
+  background:#071321;
+  border:1px solid #203a55;
+  border-radius:10px;
+  padding:10px;
+  text-align:center;
+}
+
+.stat b{
+  display:block;
+  font-size:20px;
+  margin-bottom:3px;
+}
+
+.stat span{
+  color:#819ab2;
+  font-size:11px;
+}
+
+.chips{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+}
+
+.chip{
+  padding:8px 11px;
+  background:#12283e;
+  border:1px solid #285173;
+  border-radius:9px;
+  font-weight:bold;
+}
+
+.chip small{
+  display:block;
+  color:#7891aa;
+  font-weight:normal;
+  margin-top:2px;
+}
+
+.number{
+  font-size:21px;
+  font-weight:bold;
+  letter-spacing:2px;
+}
+
+.rank{
+  display:grid;
+  grid-template-columns:45px 90px 1fr 70px;
+  gap:8px;
+  align-items:center;
+  padding:9px;
+  border-bottom:1px solid #1b3045;
+}
+
+.rank:last-child{
+  border-bottom:0;
+}
+
+.rankno{
+  color:#7590a9;
+}
+
+.score{
+  font-weight:bold;
+}
+
+.bar{
+  height:7px;
+  background:#14283d;
+  border-radius:10px;
+  overflow:hidden;
+}
+
+.bar i{
+  display:block;
+  height:100%;
+  background:#3194e5;
+}
+
+.tablewrap{
+  overflow-x:auto;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  min-width:600px;
+}
+
+th,td{
+  border-bottom:1px solid #1d354d;
+  padding:8px;
+  text-align:center;
+}
+
+th{
+  color:#8eabc4;
+  font-size:12px;
+}
+
+td{
+  font-size:13px;
+}
+
+.muted{
+  color:#718ba5;
+  font-size:12px;
+}
+
+.good{
+  color:#52d99a;
+}
+
+.warn{
+  color:#ffc65c;
+}
+
+.dangerText{
+  color:#ff7e87;
+}
+
+.history{
+  max-height:300px;
+  overflow:auto;
+}
+
+.historyItem{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:8px;
+  border-bottom:1px solid #1b3045;
+}
+
+.historyItem b{
+  font-size:17px;
+  letter-spacing:2px;
+}
+
+.hidden{
+  display:none;
+}
+
+.notice{
+  background:#0b2437;
+  border-left:4px solid #2f9ce8;
+  padding:10px;
+  border-radius:7px;
+  color:#b6d4ee;
+  font-size:12px;
+  line-height:1.5;
+}
+
+.notice.warnbox{
+  border-left-color:#ffc65c;
+}
+
+.footer{
+  text-align:center;
+  color:#536c83;
+  padding:20px;
+  font-size:11px;
+}
+
+@media print{
+  body{
+    background:white;
+    color:black;
+  }
+
+  .noPrint{
+    display:none!important;
+  }
+
+  .card{
+    border:1px solid #ccc;
+    box-shadow:none;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>🎯 Mr. Aina Predictor <span class="badge">SPECIALIZED 4D</span></h1>
+  <p>Historical Frequency • Transition • 2-Step • Backtest • 4D / 3D / 2D</p>
+</header>
+
+<div class="container">
+
+<!-- INPUT -->
+<div class="card noPrint">
+  <h2>⚙️ DATA & PARAMETER</h2>
+
+  <div class="grid">
+
+    <div>
+      <label>Hasil Terakhir</label>
+      <input id="last" maxlength="4" inputmode="numeric" placeholder="1756">
+    </div>
+
+    <div>
+      <label>Jumlah Kandidat 4D</label>
+      <select id="amount">
+        <option value="10">10</option>
+        <option value="20" selected>20</option>
+        <option value="30">30</option>
+        <option value="50">50</option>
+        <option value="100">100</option>
+      </select>
+    </div>
+
+    <div>
+      <label>Bobot Transisi</label>
+      <select id="transitionWeight">
+        <option value="1">Rendah</option>
+        <option value="2" selected>Normal</option>
+        <option value="3">Tinggi</option>
+        <option value="4">Sangat Tinggi</option>
+      </select>
+    </div>
+
+    <div>
+      <label>Randomness Kandidat</label>
+      <select id="randomness">
+        <option value="0.03">3%</option>
+        <option value="0.08" selected>8%</option>
+        <option value="0.15">15%</option>
+        <option value="0.25">25%</option>
+      </select>
+    </div>
+
+  </div>
+
+  <div class="actions">
+    <button class="success" onclick="saveLast()">💾 Simpan Hasil</button>
+    <button onclick="generate()">🎯 Generate</button>
+    <button class="secondary" onclick="clearLast()">Kosongkan</button>
+  </div>
+
+  <div class="notice">
+    Masukkan hasil 4D satu per satu, atau gunakan kotak batch di bawah.
+    Tekan <b>Enter</b> pada kolom hasil untuk menyimpan cepat.
+    Semua data disimpan di browser perangkat ini.
+  </div>
+</div>
+
+
+<!-- BATCH -->
+<div class="card noPrint">
+  <h2>📋 INPUT BANYAK DATA</h2>
+
+  <label>
+    Masukkan beberapa hasil sekaligus.
+    Bisa dipisahkan dengan spasi, koma, enter, atau baris baru.
+  </label>
+
+  <textarea id="batchInput"
+placeholder="1756
+2511
+8420
+9635
+1234"></textarea>
+
+  <label class="checkline">
+    <input type="checkbox" id="skipDuplicate" checked>
+    Lewati angka yang sudah ada di riwayat (duplikat)
+  </label>
+
+  <div class="actions">
+    <button class="success" onclick="importBatch()">➕ Tambahkan ke Riwayat</button>
+    <button class="secondary" onclick="document.getElementById('batchInput').value=''">
+      Bersihkan
+    </button>
+  </div>
+
+  <div class="notice warnbox">
+    ⚠️ <b>Urutan penting:</b> masukkan data dari <b>terlama ke terbaru</b>.
+    Data terakhir yang dimasukkan dianggap hasil paling baru
+    dan menjadi acuan perhitungan transisi.
+  </div>
+</div>
+
+
+<!-- IMPORT EXPORT -->
+<div class="card noPrint">
+  <h2>📦 IMPORT / EXPORT DATA</h2>
+
+  <div class="actions">
+    <button onclick="exportJSON()">📤 Export JSON</button>
+
+    <button onclick="exportTXT()">📄 Export TXT</button>
+
+    <button onclick="document.getElementById('fileInput').click()">
+      📥 Import File
+    </button>
+
+    <button class="danger" onclick="deleteAll()">
+      🗑️ Hapus Semua Riwayat
+    </button>
+
+    <input
+      id="fileInput"
+      type="file"
+      accept=".txt,.csv,.json"
+      class="hidden"
+      onchange="importFile(event)"
+    >
+  </div>
+</div>
+
+
+<!-- STORAGE STATUS -->
+<div class="card">
+  <h2>💾 STATUS PENYIMPANAN</h2>
+
+  <div class="statgrid">
+
+    <div class="stat">
+      <b id="totalData">0</b>
+      <span>Total Data</span>
+    </div>
+
+    <div class="stat">
+      <b id="uniqueData">0</b>
+      <span>4D Unik</span>
+    </div>
+
+    <div class="stat">
+      <b id="latestData">----</b>
+      <span>Terbaru</span>
+    </div>
+
+    <div class="stat">
+      <b id="oldestData">----</b>
+      <span>Terlama</span>
+    </div>
+
+    <div class="stat">
+      <b id="storageSize">0 KB</b>
+      <span>Ukuran Data</span>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- HISTORY -->
+<div class="card noPrint">
+  <h2>📚 RIWAYAT DATA</h2>
+
+  <div id="history" class="history"></div>
+
+  <div class="actions">
+    <button class="warning" onclick="deleteLastHistory()">
+      Hapus Data Terakhir
+    </button>
+  </div>
+</div>
+
+
+<!-- DIGIT FREQUENCY -->
+<div class="card">
+  <h2>📊 FREKUENSI ANGKA 0–9</h2>
+
+  <div id="digitFrequency" class="chips"></div>
+</div>
+
+
+<!-- POSITION -->
+<div class="card">
+  <h2>📍 FREKUENSI PER POSISI</h2>
+
+  <div id="positionFrequency"></div>
+</div>
+
+
+<!-- TRANSITION -->
+<div class="card">
+  <h2>🔄 TRANSITION 1-STEP</h2>
+
+  <div class="muted">
+    Angka sebelumnya → angka yang muncul setelahnya.
+  </div>
+
+  <div class="tablewrap">
+    <table id="transitionTable"></table>
+  </div>
+</div>
+
+
+<!-- 2 STEP -->
+<div class="card">
+  <h2>🔄 TRANSITION 2-STEP</h2>
+
+  <div class="muted">
+    Dua angka sebelumnya → angka berikutnya.
+  </div>
+
+  <div class="tablewrap">
+    <table id="twoStepTable"></table>
+  </div>
+</div>
+
+
+<!-- DIGIT MODEL -->
+<div class="card">
+  <h2>🎯 ANGKA YANG PALING KUAT MENURUT MODEL</h2>
+
+  <div id="digitModel"></div>
+</div>
+
+
+<!-- 4D -->
+<div class="card">
+  <h2>🔢 TOP KANDIDAT 4D</h2>
+
+  <div class="actions noPrint">
+    <button class="secondary" onclick="copyCandidates()">📋 Copy Kandidat</button>
+    <button class="secondary" onclick="exportCandidatesTXT()">💾 Simpan TXT</button>
+  </div>
+
+  <div id="fourD"></div>
+  <div id="fourDInfo" class="muted" style="margin-top:6px"></div>
+</div>
+
+
+<!-- 3D -->
+<div class="card">
+  <h2>🔢 GENERATOR 3D</h2>
+
+  <div class="grid">
+    <div>
+      <label>3D Depan (ABC)</label>
+      <div id="threeFront" class="chips"></div>
+    </div>
+
+    <div>
+      <label>3D Tengah (BCD)</label>
+      <div id="threeMiddle" class="chips"></div>
+    </div>
+
+    <div>
+      <label>3D Silang (ACD)</label>
+      <div id="threeCrossACD" class="chips"></div>
+    </div>
+
+    <div>
+      <label>3D Silang (ABD)</label>
+      <div id="threeCrossABD" class="chips"></div>
+    </div>
+  </div>
+</div>
+
+
+<!-- 2D -->
+<div class="card">
+  <h2>🔢 GENERATOR 2D</h2>
+
+  <div class="grid">
+
+    <div>
+      <label>2D Depan (AB)</label>
+      <div id="twoFront" class="chips"></div>
+    </div>
+
+    <div>
+      <label>2D Tengah (BC)</label>
+      <div id="twoMiddle" class="chips"></div>
+    </div>
+
+    <div>
+      <label>2D Belakang (CD)</label>
+      <div id="twoBack" class="chips"></div>
+    </div>
+
+    <div>
+      <label>2D Silang (AD/AC/BD)</label>
+      <div id="twoCross" class="chips"></div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- BACKTEST -->
+<div class="card">
+  <h2>🧪 BACKTEST MODEL</h2>
+
+  <div class="grid">
+
+    <div>
+      <label>Minimal Data Training</label>
+      <select id="backtestMin">
+        <option value="20">20</option>
+        <option value="30" selected>30</option>
+        <option value="50">50</option>
+        <option value="100">100</option>
+      </select>
+    </div>
+
+    <div>
+      <label>Top Kandidat (per posisi)</label>
+      <select id="backtestTop">
+        <option value="1">Top 1</option>
+        <option value="2">Top 2</option>
+        <option value="3" selected>Top 3</option>
+        <option value="5">Top 5</option>
+      </select>
+    </div>
+
+  </div>
+
+  <div class="actions noPrint">
+    <button onclick="runBacktest()">🧪 Jalankan Backtest</button>
+  </div>
+
+  <div id="backtestResult"></div>
+
+</div>
+
+
+<!-- DETAIL -->
+<div class="card">
+  <h2>🔍 DETAIL MODEL</h2>
+  <div id="detail"></div>
+</div>
+
+
+<div class="footer">
+  Mr. Aina Predictor specialized 4D • Local Storage • Statistical Ranking
+</div>
+
+</div>
+
+
+<script>
+
+/* =========================================================
+   CONFIG
+========================================================= */
+
+const STORAGE_KEY = "4d_key_generator_v3_history";
+
+let historyData = [];
+
+let modelCache = null;
+
+let currentCandidates = [];
+
+const POS_NAMES = ["AS","KOP","KEP","EKOR"];
+
+const DECAY = 0.985;
+
+
+/* =========================================================
+   BASIC UTILITIES
+========================================================= */
+
+function valid4D(x){
+  return /^\d{4}$/.test(String(x));
+}
+
+
+function normalize4D(x){
+  x = String(x || "")
+    .trim()
+    .replace(/\D/g,"");
+
+  if(x.length !== 4) return null;
+
+  return x;
+}
+
+
+function esc(x){
+  return String(x)
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;");
+}
+
+
+function clamp(x,min,max){
+  return Math.max(min,Math.min(max,x));
+}
+
+
+/* =========================================================
+   MODEL WEIGHTS
+   Bobot dinormalisasi agar skor antar-setting
+   dapat dibandingkan langsung (skor akhir 0–1).
+========================================================= */
+
+function computeWeights(tw){
+  const w = {
+    base:   0.40,
+    global: 0.15,
+    trans:  0.30 * (tw/2),
+    step2:  0.15 * (tw/2)
+  };
+  w.sum = w.base + w.global + w.trans + w.step2;
+  return w;
+}
+
+
+/* =========================================================
+   STORAGE
+========================================================= */
+
+function loadHistory(){
+
+  try{
+
+    const raw = localStorage.getItem(STORAGE_KEY);
+
+    if(!raw){
+      historyData = [];
+      return;
+    }
+
+    const data = JSON.parse(raw);
+
+    if(Array.isArray(data)){
+      historyData = data
+        .map(normalize4D)
+        .filter(Boolean);
+    }else{
+      historyData = [];
+    }
+
+  }catch(e){
+    console.error(e);
+    historyData = [];
+  }
+
+}
+
+
+function saveHistory(){
+  localStorage.setItem(
+    STORAGE_KEY,
+    JSON.stringify(historyData)
+  );
+  updateStorageStatus();
+}
+
+
+function saveLast(){
+
+  const input =
+    normalize4D(
+      document.getElementById("last").value
+    );
+
+  if(!input){
+    alert("Masukkan angka 4 digit yang valid.");
+    return;
+  }
+
+  historyData.push(input);
+
+  saveHistory();
+
+  document.getElementById("last").value = input;
+
+  rebuild();
+
+}
+
+
+function addValues(values){
+
+  const skipDup =
+    document.getElementById("skipDuplicate") &&
+    document.getElementById("skipDuplicate").checked;
+
+  let added = 0;
+  let dup = 0;
+
+  values.forEach(v=>{
+
+    if(skipDup && historyData.includes(v)){
+      dup++;
+      return;
+    }
+
+    historyData.push(v);
+    added++;
+
+  });
+
+  if(added){
+    saveHistory();
+    rebuild();
+  }
+
+  let msg = added + " data ditambahkan.";
+  if(dup) msg += "\n" + dup + " duplikat dilewati.";
+
+  alert(msg);
+
+  return added;
+
+}
+
+
+function importBatch(){
+
+  const text =
+    document.getElementById("batchInput").value;
+
+  if(!text.trim()){
+    alert("Data kosong.");
+    return;
+  }
+
+  const matches =
+    text.match(/\b\d{4}\b/g) || [];
+
+  const valid =
+    matches
+      .map(normalize4D)
+      .filter(Boolean);
+
+  if(!valid.length){
+    alert("Tidak ditemukan data 4D.");
+    return;
+  }
+
+  const added =
+    addValues(valid);
+
+  if(added)
+    document.getElementById("batchInput").value = "";
+
+}
+
+
+function deleteLastHistory(){
+
+  if(!historyData.length) return;
+
+  historyData.pop();
+
+  saveHistory();
+
+  rebuild();
+
+}
+
+
+function deleteAll(){
+
+  if(!historyData.length) return;
+
+  if(!confirm(
+    "Hapus SEMUA riwayat " +
+    historyData.length +
+    " data?"
+  )) return;
+
+  historyData = [];
+
+  saveHistory();
+
+  rebuild();
+
+}
+
+
+function clearLast(){
+  document.getElementById("last").value = "";
+}
+
+
+/* =========================================================
+   IMPORT / EXPORT
+========================================================= */
+
+function exportJSON(){
+
+  const blob =
+    new Blob(
+      [
+        JSON.stringify(
+          {
+            version:"Mr. Aina Predictor V3.1",
+            exportedAt:new Date().toISOString(),
+            data:historyData
+          },
+          null,
+          2
+        )
+      ],
+      {
+        type:"application/json"
+      }
+    );
+
+  downloadBlob(
+    blob,
+    "MrAina-4D-history.json"
+  );
+
+}
+
+
+function exportTXT(){
+
+  const blob =
+    new Blob(
+      [
+        historyData.join("\n")
+      ],
+      {
+        type:"text/plain"
+      }
+    );
+
+  downloadBlob(
+    blob,
+    "MrAina-4D-history.txt"
+  );
+
+}
+
+
+function exportCandidatesTXT(){
+
+  if(!currentCandidates.length){
+    alert("Belum ada kandidat. Jalankan Generate dulu.");
+    return;
+  }
+
+  downloadBlob(
+    new Blob(
+      [currentCandidates.join("\n")],
+      {type:"text/plain"}
+    ),
+    "MrAina-4D-candidates.txt"
+  );
+
+}
+
+
+function downloadBlob(blob,name){
+
+  const a =
+    document.createElement("a");
+
+  a.href =
+    URL.createObjectURL(blob);
+
+  a.download = name;
+
+  document.body.appendChild(a);
+
+  a.click();
+
+  setTimeout(()=>{
+    URL.revokeObjectURL(a.href);
+    a.remove();
+  },100);
+
+}
+
+
+function importFile(event){
+
+  const file =
+    event.target.files[0];
+
+  if(!file) return;
+
+  const reader =
+    new FileReader();
+
+  reader.onload = function(){
+
+    const text =
+      String(reader.result || "");
+
+    let values = [];
+
+    if(file.name.toLowerCase().endsWith(".json")){
+
+      try{
+
+        const obj =
+          JSON.parse(text);
+
+        if(Array.isArray(obj)){
+          values = obj;
+        }else if(Array.isArray(obj.data)){
+          values = obj.data;
+        }
+
+      }catch(e){
+        alert("JSON tidak valid.");
+        return;
+      }
+
+    }else{
+
+      values =
+        text.match(/\b\d{4}\b/g) || [];
+
+    }
+
+    values =
+      values
+        .map(normalize4D)
+        .filter(Boolean);
+
+    if(!values.length){
+      alert("Tidak ditemukan data 4D.");
+      return;
+    }
+
+    addValues(values);
+
+  };
+
+  reader.readAsText(file);
+
+  event.target.value = "";
+
+}
+
+
+/* =========================================================
+   COPY CANDIDATES
+========================================================= */
+
+function copyCandidates(){
+
+  if(!currentCandidates.length){
+    alert("Belum ada kandidat. Jalankan Generate dulu.");
+    return;
+  }
+
+  const text =
+    currentCandidates.join("\n");
+
+  const done = ()=>
+    alert(
+      currentCandidates.length +
+      " kandidat disalin ke clipboard."
+    );
+
+  if(
+    navigator.clipboard &&
+    navigator.clipboard.writeText
+  ){
+    navigator.clipboard
+      .writeText(text)
+      .then(done)
+      .catch(()=>{
+        fallbackCopy(text);
+        done();
+      });
+  }else{
+    fallbackCopy(text);
+    done();
+  }
+
+}
+
+
+function fallbackCopy(text){
+
+  const ta =
+    document.createElement("textarea");
+
+  ta.value = text;
+  ta.style.position = "fixed";
+  ta.style.opacity = "0";
+
+  document.body.appendChild(ta);
+  ta.select();
+
+  try{
+    document.execCommand("copy");
+  }catch(e){}
+
+  ta.remove();
+
+}
+
+
+/* =========================================================
+   STORAGE UI
+========================================================= */
+
+function updateStorageStatus(){
+
+  const unique =
+    new Set(historyData);
+
+  document.getElementById("totalData")
+    .textContent =
+    historyData.length;
+
+  document.getElementById("uniqueData")
+    .textContent =
+    unique.size;
+
+  document.getElementById("latestData")
+    .textContent =
+    historyData.length
+      ? historyData[historyData.length-1]
+      : "----";
+
+  document.getElementById("oldestData")
+    .textContent =
+    historyData.length
+      ? historyData[0]
+      : "----";
+
+  let size = 0;
+
+  try{
+    size =
+      new Blob([
+        JSON.stringify(historyData)
+      ]).size;
+  }catch(e){}
+
+  document.getElementById("storageSize")
+    .textContent =
+    (size / 1024).toFixed(2) + " KB";
+
+}
+
+
+/* =========================================================
+   HISTORY RENDER
+========================================================= */
+
+function renderHistory(){
+
+  const el =
+    document.getElementById("history");
+
+  if(!historyData.length){
+
+    el.innerHTML =
+      `<div class="muted">
+        Belum ada riwayat.
+      </div>`;
+
+    return;
+  }
+
+  let html = "";
+
+  const maxShow = 300;
+
+  const start =
+    Math.max(
+      0,
+      historyData.length-maxShow
+    );
+
+  for(
+    let i=historyData.length-1;
+    i>=start;
+    i--
+  ){
+
+    html += `
+      <div class="historyItem">
+        <span>
+          <b>${esc(historyData[i])}</b>
+        </span>
+        <span class="muted">
+          #${i+1}
+        </span>
+      </div>
+    `;
+
+  }
+
+  el.innerHTML = html;
+
+}
+
+
+/* =========================================================
+   MODEL CREATION
+========================================================= */
+
+function createEmptyMatrix(){
+
+  const m = {};
+
+  for(let i=0;i<10;i++){
+
+    m[i] = {};
+
+    for(let j=0;j<10;j++){
+      m[i][j] = 0;
+    }
+
+  }
+
+  return m;
+
+}
+
+
+function createPositionFrequency(){
+  return {
+    AS:Array(10).fill(0),
+    KOP:Array(10).fill(0),
+    KEP:Array(10).fill(0),
+    EKOR:Array(10).fill(0)
+  };
+}
+
+
+/*
+  Model memakai recency decay.
+  Data terbaru lebih berat daripada data lama.
+  weight = DECAY ^ umur
+*/
+
+function buildModel(data){
+
+  const positionFreq =
+    createPositionFrequency();
+
+  const globalFreq =
+    Array(10).fill(0);
+
+  const transitionPos = {};
+
+  POS_NAMES.forEach(pos=>{
+    transitionPos[pos] =
+      createEmptyMatrix();
+  });
+
+  const twoStepPos = {};
+
+  POS_NAMES.forEach(pos=>{
+    twoStepPos[pos] = {};
+  });
+
+  let totalWeight = 0;
+
+
+  /*
+    POSITION & GLOBAL FREQUENCY
+  */
+
+  for(let i=0;i<data.length;i++){
+
+    const age =
+      data.length-1-i;
+
+    const weight =
+      Math.pow(DECAY,age);
+
+    totalWeight += weight;
+
+    const key = data[i];
+
+    for(let p=0;p<4;p++){
+
+      const d =
+        Number(key[p]);
+
+      globalFreq[d] += weight;
+
+      positionFreq[POS_NAMES[p]][d]
+        += weight;
+
+    }
+
+  }
+
+
+  /*
+    TRANSITION 1 STEP PER POSITION
+  */
+
+  for(let i=1;i<data.length;i++){
+
+    const age =
+      data.length-1-i;
+
+    const weight =
+      Math.pow(DECAY,age);
+
+    const prev = data[i-1];
+    const curr = data[i];
+
+    for(let p=0;p<4;p++){
+
+      const a =
+        Number(prev[p]);
+
+      const b =
+        Number(curr[p]);
+
+      transitionPos[POS_NAMES[p]][a][b]
+        += weight;
+
+    }
+
+  }
+
+
+  /*
+    TRANSITION 2 STEP PER POSITION
+  */
+
+  for(let i=2;i<data.length;i++){
+
+    const age =
+      data.length-1-i;
+
+    const weight =
+      Math.pow(DECAY,age);
+
+    const prev2 = data[i-2];
+    const prev  = data[i-1];
+    const curr  = data[i];
+
+    for(let p=0;p<4;p++){
+
+      const a =
+        Number(prev2[p]);
+
+      const b =
+        Number(prev[p]);
+
+      const c =
+        Number(curr[p]);
+
+      const pos =
+        POS_NAMES[p];
+
+      if(!twoStepPos[pos][a])
+        twoStepPos[pos][a] = {};
+
+      if(!twoStepPos[pos][a][b])
+        twoStepPos[pos][a][b] =
+          Array(10).fill(0);
+
+      twoStepPos[pos][a][b][c]
+        += weight;
+
+    }
+
+  }
+
+
+  modelCache = {
+    positionFreq,
+    globalFreq,
+    transitionPos,
+    twoStepPos,
+    totalWeight,
+    dataLength:data.length
+  };
+
+  return modelCache;
+
+}
+
+
+/* =========================================================
+   FREQUENCY RENDER
+========================================================= */
+
+function renderFrequency(model){
+
+  const el =
+    document.getElementById("digitFrequency");
+
+  const total =
+    model.globalFreq.reduce((a,b)=>a+b,0);
+
+  const arr =
+    [...Array(10).keys()]
+      .sort(
+        (a,b)=>
+          model.globalFreq[b]-
+          model.globalFreq[a]
+      );
+
+  let html="";
+
+  arr.forEach(d=>{
+
+    const pct =
+      total
+        ? model.globalFreq[d]/total*100
+        : 0;
+
+    html += `
+      <div class="chip">
+        ${d}
+        <small>
+          ${pct.toFixed(2)}%
+          • ${model.globalFreq[d].toFixed(1)}
+        </small>
+      </div>
+    `;
+
+  });
+
+  el.innerHTML = html;
+
+}
+
+
+/* =========================================================
+   POSITION FREQUENCY
+========================================================= */
+
+function renderPositionFrequency(model){
+
+  const el =
+    document.getElementById("positionFrequency");
+
+  let html="";
+
+  POS_NAMES.forEach(pos=>{
+
+    const arr =
+      [...Array(10).keys()]
+        .sort(
+          (a,b)=>
+            model.positionFreq[pos][b] -
+            model.positionFreq[pos][a]
+        );
+
+    let chips="";
+
+    const total =
+      model.positionFreq[pos]
+        .reduce((a,b)=>a+b,0);
+
+    arr.forEach(d=>{
+
+      const pct =
+        total
+          ? model.positionFreq[pos][d]/total*100
+          : 0;
+
+      chips += `
+        <span class="chip">
+          ${d}
+          <small>${pct.toFixed(2)}%</small>
+        </span>
+      `;
+
+    });
+
+    html += `
+      <div style="margin-bottom:14px">
+        <b>${pos}</b>
+        <div class="chips" style="margin-top:6px">
+          ${chips}
+        </div>
+      </div>
+    `;
+
+  });
+
+  el.innerHTML = html;
+
+}
+
+
+/* =========================================================
+   TRANSITION RENDER
+========================================================= */
+
+function renderTransition(model){
+
+  const table =
+    document.getElementById("transitionTable");
+
+  let html = `
+    <thead>
+      <tr>
+        <th>Posisi</th>
+        <th>Angka</th>
+        ${[0,1,2,3,4,5,6,7,8,9]
+          .map(x=>`<th>${x}</th>`).join("")}
+      </tr>
+    </thead>
+    <tbody>
+  `;
+
+  POS_NAMES.forEach(pos=>{
+
+    for(let a=0;a<10;a++){
+
+      const row =
+        model.transitionPos[pos][a];
+
+      const max =
+        Math.max(...Object.values(row));
+
+      html += `
+        <tr>
+          <td>${pos}</td>
+          <td><b>${a}</b></td>
+      `;
+
+      for(let b=0;b<10;b++){
+
+        const value = row[b];
+
+        const pct =
+          max
+            ? value/max*100
+            : 0;
+
+        html += `
+          <td>
+            ${value ? value.toFixed(1) : "-"}
+            ${value ? `<br>
+              <span class="muted">
+                ${pct.toFixed(0)}%
+              </span>` : ""}
+          </td>
+        `;
+
+      }
+
+      html += `</tr>`;
+
+    }
+
+  });
+
+  html += "</tbody>";
+
+  table.innerHTML = html;
+
+}
+
+
+/* =========================================================
+   2 STEP RENDER
+========================================================= */
+
+function renderTwoStep(model){
+
+  const table =
+    document.getElementById("twoStepTable");
+
+  let html = `
+    <thead>
+      <tr>
+        <th>Posisi</th>
+        <th>2-Step</th>
+        <th>Berikutnya</th>
+        <th>Count</th>
+      </tr>
+    </thead>
+    <tbody>
+  `;
+
+  POS_NAMES.forEach(pos=>{
+
+    const source =
+      model.twoStepPos[pos];
+
+    const rows=[];
+
+    for(const a in source){
+
+      for(const b in source[a]){
+
+        const arr =
+          source[a][b];
+
+        arr.forEach((v,c)=>{
+
+          if(v>0){
+            rows.push({
+              pair:a+b,
+              digit:c,
+              value:v
+            });
+          }
+
+        });
+
+      }
+
+    }
+
+    rows
+      .sort((x,y)=>y.value-x.value)
+      .slice(0,20)
+      .forEach(r=>{
+
+        html += `
+          <tr>
+            <td>${pos}</td>
+            <td><b>${r.pair}</b></td>
+            <td><b>${r.digit}</b></td>
+            <td>${r.value.toFixed(1)}</td>
+          </tr>
+        `;
+
+      });
+
+  });
+
+  html += "</tbody>";
+
+  table.innerHTML = html;
+
+}
+
+
+/* =========================================================
+   SCORE MODEL
+========================================================= */
+
+function normalized(arr){
+
+  const max =
+    Math.max(...arr);
+
+  if(!max) return arr.map(()=>0);
+
+  return arr.map(x=>x/max);
+
+}
+
+
+function posIndex(pos){
+  return {
+    AS:0,
+    KOP:1,
+    KEP:2,
+    EKOR:3
+  }[pos];
+}
+
+
+/*
+  Skor digit 0–1 (ternormalisasi).
+  w = computeWeights(tw)
+*/
+
+function digitScore(
+  pos,
+  digit,
+  last,
+  prev2,
+  w
+){
+
+  const model =
+    modelCache;
+
+  const base =
+    normalized(model.positionFreq[pos])[digit] || 0;
+
+  const global =
+    normalized(model.globalFreq)[digit] || 0;
+
+
+  /* ONE STEP */
+
+  let trans=0;
+
+  if(last){
+
+    const d =
+      Number(last[posIndex(pos)]);
+
+    const row =
+      model.transitionPos[pos][d];
+
+    trans =
+      normalized(
+        Object.values(row)
+      )[digit] || 0;
+
+  }
+
+
+  /* TWO STEP */
+
+  let step2=0;
+
+  if(last && prev2){
+
+    const a =
+      Number(prev2[posIndex(pos)]);
+
+    const b =
+      Number(last[posIndex(pos)]);
+
+    const row =
+      model.twoStepPos[pos] &&
+      model.twoStepPos[pos][a] &&
+      model.twoStepPos[pos][a][b];
+
+    if(row){
+      step2 =
+        normalized(row)[digit] || 0;
+    }
+
+  }
+
+
+  const final =
+    (
+        base   * w.base
+      + global * w.global
+      + trans  * w.trans
+      + step2  * w.step2
+    ) / w.sum;
+
+  return clamp(final,0,1);
+
+}
+
+
+/* =========================================================
+   KEY SCORE (FAST)
+   Memakai digitScores yang sudah dihitung —
+   tidak menghitung ulang per kandidat.
+========================================================= */
+
+function scoreKeyFast(key,digitScores){
+
+  let s =
+      digitScores.AS[Number(key[0])]
+    + digitScores.KOP[Number(key[1])]
+    + digitScores.KEP[Number(key[2])]
+    + digitScores.EKOR[Number(key[3])];
+
+
+  /*
+    SMALL STRUCTURAL BONUS
+    Sengaja kecil, tidak mendominasi model historis.
+  */
+
+  if(key.includes("0"))
+    s += .025;
+
+  if(key.includes("9"))
+    s += .025;
+
+  if(
+    key[0]===key[1] ||
+    key[1]===key[2] ||
+    key[2]===key[3]
+  )
+    s += .015;
+
+  return s;
+
+}
+
+
+/* =========================================================
+   WEIGHTED RANDOM
+========================================================= */
+
+function weightedChoice(
+  digits,
+  scores,
+  randomness
+){
+
+  const adjusted =
+    scores.map(s=>
+      Math.max(
+        0.0001,
+        s *
+        (
+          1 +
+          (Math.random()-.5)*
+          randomness
+        )
+      )
+    );
+
+  const total =
+    adjusted.reduce((a,b)=>a+b,0);
+
+  let r =
+    Math.random()*total;
+
+  for(let i=0;i<digits.length;i++){
+
+    r -= adjusted[i];
+
+    if(r<=0)
+
+      return digits[i];
+
+  }
+
+  return digits[digits.length-1];
+
+}
+
+
+/* =========================================================
+   GENERATE
+========================================================= */
+
+function generate(){
+
+  if(historyData.length < 3){
+
+    alert(
+      "Minimal 3 data diperlukan. " +
+      "Lebih baik gunakan puluhan atau ratusan data."
+    );
+
+    return;
+  }
+
+
+  const last =
+    normalize4D(
+      document.getElementById("last").value
+    ) ||
+    historyData[historyData.length-1];
+
+
+  const prev2 =
+    historyData.length >= 2
+      ? historyData[historyData.length-2]
+      : null;
+
+
+  const amount =
+    Number(
+      document.getElementById("amount").value
+    );
+
+
+  const transitionWeight =
+    Number(
+      document.getElementById("transitionWeight").value
+    );
+
+
+  const randomness =
+    Number(
+      document.getElementById("randomness").value
+    );
+
+
+  const w =
+    computeWeights(transitionWeight);
+
+
+  /*
+    DIGIT SCORE (dihitung SEKALI)
+  */
+
+  const digitScores = {};
+
+  POS_NAMES.forEach(pos=>{
+
+    digitScores[pos] =
+      Array.from(
+        {length:10},
+        (_,d)=>
+          digitScore(
+            pos,
+            d,
+            last,
+            prev2,
+            w
+          )
+      );
+
+  });
+
+
+  /*
+    CANDIDATE GENERATION
+    Selalu sertakan deterministic best key,
+    lalu Monte Carlo sampai jumlah unik terpenuhi.
+  */
+
+  const candidates =
+    new Map();
+
+
+  let best="";
+
+  POS_NAMES.forEach(pos=>{
+
+    const arr =
+      digitScores[pos];
+
+    best +=
+      arr.indexOf(
+        Math.max(...arr)
+      );
+
+  });
+
+  candidates.set(
+    best,
+    scoreKeyFast(best,digitScores)
+  );
+
+
+  const iterations =
+    Math.max(
+      5000,
+      amount*500
+    );
+
+  let attempts = 0;
+
+  while(
+    candidates.size < amount &&
+    attempts < iterations*5
+  ){
+
+    let key="";
+
+    POS_NAMES.forEach(pos=>{
+
+      key +=
+        weightedChoice(
+          [0,1,2,3,4,5,6,7,8,9],
+          digitScores[pos],
+          randomness
+        );
+
+    });
+
+    if(!candidates.has(key)){
+      candidates.set(
+        key,
+        scoreKeyFast(key,digitScores)
+      );
+    }
+
+    attempts++;
+
+  }
+
+
+  /*
+    SORT
+  */
+
+  const result =
+    [...candidates.entries()]
+      .map(([key,score])=>({
+        key,
+        score
+      }))
+      .sort(
+        (a,b)=>
+          b.score-a.score
+      )
+      .slice(0,amount);
+
+  currentCandidates =
+    result.map(r=>r.key);
+
+
+  renderDigitModel(digitScores);
+
+  render4D(result,amount);
+
+  render3D(result);
+
+  render2D(result);
+
+  renderDetail(
+    last,
+    prev2,
+    transitionWeight,
+    w
+  );
+
+}
+
+
+/* =========================================================
+   DIGIT MODEL
+========================================================= */
+
+function renderDigitModel(scores){
+
+  const el =
+    document.getElementById("digitModel");
+
+  let html="";
+
+  POS_NAMES.forEach(pos=>{
+
+    const arr =
+      scores[pos]
+        .map(
+          (score,digit)=>({
+            digit,
+            score
+          })
+        )
+        .sort(
+          (a,b)=>
+            b.score-a.score
+        );
+
+    const max =
+      arr[0]?.score || 1;
+
+    html += `
+      <div style="margin-bottom:16px">
+
+        <b>${pos}</b>
+
+        <div style="margin-top:7px">
+
+    `;
+
+    arr.forEach((x,index)=>{
+
+      html += `
+        <div class="rank">
+
+          <div class="rankno">
+            #${index+1}
+          </div>
+
+          <div class="number">
+            ${x.digit}
+          </div>
+
+          <div>
+            <div class="bar">
+              <i style="width:${x.score/max*100}%"></i>
+            </div>
+          </div>
+
+          <div class="score">
+            ${x.score.toFixed(3)}
+          </div>
+
+        </div>
+      `;
+
+    });
+
+    html += `
+        </div>
+      </div>
+    `;
+
+  });
+
+  el.innerHTML = html;
+
+}
+
+
+/* =========================================================
+   4D RENDER
+========================================================= */
+
+function render4D(result,requested){
+
+  const el =
+    document.getElementById("fourD");
+
+  const info =
+    document.getElementById("fourDInfo");
+
+  if(!result.length){
+
+    el.innerHTML =
+      `<div class="muted">
+        Tidak ada kandidat.
+      </div>`;
+
+    info.textContent = "";
+
+    return;
+  }
+
+  const max =
+    result[0].score || 1;
+
+  let html="";
+
+  result.forEach((r,i)=>{
+
+    html += `
+      <div class="rank">
+
+        <div class="rankno">
+          #${i+1}
+        </div>
+
+        <div class="number">
+          ${r.key}
+        </div>
+
+        <div>
+          <div class="bar">
+            <i style="width:${r.score/max*100}%"></i>
+          </div>
+        </div>
+
+        <div class="score">
+          ${r.score.toFixed(3)}
+        </div>
+
+      </div>
+    `;
+
+  });
+
+  el.innerHTML = html;
+
+  info.textContent =
+    result.length < requested
+      ? `Menampilkan ${result.length} kandidat unik (permintaan ${requested} — model hanya menghasilkan ${result.length} kombinasi unik pada setting ini).`
+      : `Menampilkan ${result.length} kandidat unik.`;
+
+}
+
+
+/* =========================================================
+   UNIQUE CHIP HELPER
+========================================================= */
+
+function uniqueTop(values,limit=15){
+
+  const count={};
+
+  values.forEach(v=>{
+    count[v]=(count[v]||0)+1;
+  });
+
+  return Object.entries(count)
+    .sort((a,b)=>b[1]-a[1])
+    .slice(0,limit);
+
+}
+
+
+function renderChipList(
+  elementId,
+  values
+){
+
+  const el =
+    document.getElementById(elementId);
+
+  const list =
+    uniqueTop(values,15);
+
+  if(!list.length){
+
+    el.innerHTML =
+      `<span class="muted">-</span>`;
+
+    return;
+
+  }
+
+  el.innerHTML =
+    list.map(
+      ([value,count])=>
+        `<span class="chip">
+          ${value}
+          <small>x${count}</small>
+        </span>`
+    ).join("");
+
+}
+
+
+/* =========================================================
+   3D
+   ABC = depan, BCD = tengah,
+   ACD & ABD = silang (4 kombinasi unik).
+========================================================= */
+
+function render3D(result){
+
+  const front=[];
+  const middle=[];
+  const crossACD=[];
+  const crossABD=[];
+
+  result.forEach(r=>{
+
+    const k=r.key;
+
+    front.push(k[0]+k[1]+k[2]);     // ABC
+    middle.push(k[1]+k[2]+k[3]);    // BCD
+    crossACD.push(k[0]+k[2]+k[3]);  // ACD
+    crossABD.push(k[0]+k[1]+k[3]);  // ABD
+
+  });
+
+  renderChipList("threeFront",front);
+
+  renderChipList("threeMiddle",middle);
+
+  renderChipList("threeCrossACD",crossACD);
+
+  renderChipList("threeCrossABD",crossABD);
+
+}
+
+
+/* =========================================================
+   2D
+========================================================= */
+
+function render2D(result){
+
+  const front=[];
+  const middle=[];
+  const back=[];
+  const cross=[];
+
+  result.forEach(r=>{
+
+    const k=r.key;
+
+    front.push(k[0]+k[1]);   // AB
+    middle.push(k[1]+k[2]);  // BC
+    back.push(k[2]+k[3]);    // CD
+
+    cross.push(
+      k[0]+k[2],   // AC
+      k[0]+k[3],   // AD
+      k[1]+k[3]    // BD
+    );
+
+  });
+
+  renderChipList("twoFront",front);
+
+  renderChipList("twoMiddle",middle);
+
+  renderChipList("twoBack",back);
+
+  renderChipList("twoCross",cross);
+
+}
+
+
+/* =========================================================
+   DETAIL
+========================================================= */
+
+function renderDetail(
+  last,
+  prev2,
+  transitionWeight,
+  w
+){
+
+  const el =
+    document.getElementById("detail");
+
+  if(!modelCache){
+
+    el.innerHTML =
+      `<div class="muted">
+        Model belum tersedia.
+      </div>`;
+
+    return;
+
+  }
+
+  el.innerHTML = `
+
+    <div class="grid">
+
+      <div class="stat">
+        <b>${modelCache.dataLength}</b>
+        <span>Data dianalisis</span>
+      </div>
+
+      <div class="stat">
+        <b>${esc(last)}</b>
+        <span>Hasil acuan</span>
+      </div>
+
+      <div class="stat">
+        <b>${esc(prev2 || "----")}</b>
+        <span>Hasil sebelumnya</span>
+      </div>
+
+      <div class="stat">
+        <b>${transitionWeight}</b>
+        <span>Bobot transisi</span>
+      </div>
+
+      <div class="stat">
+        <b>${(DECAY*100).toFixed(1)}%</b>
+        <span>Recency per langkah</span>
+      </div>
+
+    </div>
+
+    <br>
+
+    <div class="notice">
+      <b>Komposisi model (ternormalisasi):</b><br>
+      Frequency posisi = ${(w.base/w.sum*100).toFixed(0)}%<br>
+      Frequency global = ${(w.global/w.sum*100).toFixed(0)}%<br>
+      Transition 1-step = ${(w.trans/w.sum*100).toFixed(0)}%<br>
+      Transition 2-step = ${(w.step2/w.sum*100).toFixed(0)}%<br><br>
+      Skor tiap digit berkisar 0–1.
+      Bonus struktural kecil: mengandung 0 / 9 (+0.025),
+      ada digit berdampingan sama (+0.015).
+    </div>
+
+  `;
+
+}
+
+
+/* =========================================================
+   BACKTEST
+========================================================= */
+
+/*
+  Untuk setiap titik i:
+  training = data[0 ... i-1]
+  target   = data[i]
+
+  Diukur:
+  - apakah digit aktual masuk Top-N per posisi
+  - rata-rata rank digit aktual per posisi
+    (baseline acak = 5.5)
+  - exact 4D (Top 1 semua posisi)
+*/
+
+function runBacktest(){
+
+  if(historyData.length < 35){
+
+    alert(
+      "Backtest membutuhkan minimal sekitar 35 data."
+    );
+
+    return;
+  }
+
+
+  const minTrain =
+    Number(
+      document.getElementById("backtestMin").value
+    );
+
+
+  const topN =
+    Number(
+      document.getElementById("backtestTop").value
+    );
+
+
+  if(historyData.length <= minTrain){
+    alert("Data tidak cukup.");
+    return;
+  }
+
+
+  const el =
+    document.getElementById("backtestResult");
+
+  el.innerHTML =
+    `<div class="muted">
+      ⏳ Memproses backtest... mohon tunggu sebentar.
+    </div>`;
+
+
+  setTimeout(()=>{
+
+
+    let tests=0;
+
+    const hits = {
+      anyPosition:0,
+      allPosition:0,
+      exact4D:0
+    };
+
+    const posHits = {
+      AS:0,
+      KOP:0,
+      KEP:0,
+      EKOR:0
+    };
+
+    const posRankSum = {
+      AS:0,
+      KOP:0,
+      KEP:0,
+      EKOR:0
+    };
+
+
+    const w =
+      computeWeights(2);
+
+
+    /*
+      Batasi maksimal 300 titik agar HP
+      tidak terlalu berat.
+    */
+
+    const start =
+      Math.max(
+        minTrain,
+        historyData.length-300
+      );
+
+
+    for(
+      let i=start;
+      i<historyData.length;
+      i++
+    ){
+
+      const training =
+        historyData.slice(0,i);
+
+      const target =
+        historyData[i];
+
+      if(training.length < minTrain)
+
+        continue;
+
+
+      buildModel(training);
+
+
+      const last =
+        training[training.length-1];
+
+      const prev2 =
+        training.length >= 2
+          ? training[training.length-2]
+          : null;
+
+
+      let predicted="";
+
+      const positionTopSets={};
+
+
+      POS_NAMES.forEach(pos=>{
+
+        const scores =
+          Array.from(
+            {length:10},
+            (_,d)=>
+              digitScore(
+                pos,
+                d,
+                last,
+                prev2,
+                w
+              )
+          );
+
+
+        const ranked =
+          scores
+            .map(
+              (s,d)=>({d,s})
+            )
+            .sort(
+              (a,b)=>b.s-a.s
+            );
+
+
+        positionTopSets[pos] =
+          ranked
+            .slice(0,topN)
+            .map(x=>x.d);
+
+        predicted +=
+          String(ranked[0].d);
+
+
+        const actual =
+          Number(
+            target[posIndex(pos)]
+          );
+
+        const rank =
+          ranked.findIndex(
+            x=>x.d===actual
+          ) + 1;
+
+        posRankSum[pos] += rank;
+
+        if(positionTopSets[pos].includes(actual))
+          posHits[pos]++;
+
+      });
+
+
+      const any =
+        POS_NAMES.some(pos=>
+          positionTopSets[pos]
+            .includes(
+              Number(
+                target[posIndex(pos)]
+              )
+            )
+        );
+
+
+      const all =
+        POS_NAMES.every(pos=>
+          positionTopSets[pos]
+            .includes(
+              Number(
+                target[posIndex(pos)]
+              )
+            )
+        );
+
+
+      if(any) hits.anyPosition++;
+
+      if(all) hits.allPosition++;
+
+      if(predicted===target)
+        hits.exact4D++;
+
+
+      tests++;
+
+    }
+
+
+    /*
+      Restore full model
+    */
+
+    buildModel(historyData);
+
+
+    const pct = x=>
+      tests
+        ? (x/tests*100).toFixed(2)
+        : "0.00";
+
+
+    const avg = x=>
+      tests
+        ? (x/tests).toFixed(2)
+        : "-";
+
+
+    el.innerHTML = `
+
+      <div class="statgrid">
+
+        <div class="stat">
+          <b>${tests}</b>
+          <span>Test</span>
+        </div>
+
+        <div class="stat">
+          <b>${pct(hits.anyPosition)}%</b>
+          <span>Minimal 1 Posisi</span>
+        </div>
+
+        <div class="stat">
+          <b>${pct(hits.allPosition)}%</b>
+          <span>Semua Posisi</span>
+        </div>
+
+        <div class="stat">
+          <b>${pct(hits.exact4D)}%</b>
+          <span>Exact 4D (Top 1)</span>
+        </div>
+
+        <div class="stat">
+          <b>${topN}</b>
+          <span>Top N</span>
+        </div>
+
+      </div>
+
+      <br>
+
+      <div class="tablewrap">
+
+        <table>
+
+          <thead>
+            <tr>
+              <th>Posisi</th>
+              <th>Hit</th>
+              <th>Rate</th>
+              <th>Avg Rank</th>
+            </tr>
+          </thead>
+
+          <tbody>
+
+            ${POS_NAMES.map(pos=>`
+
+              <tr>
+                <td>${pos}</td>
+                <td>${posHits[pos]}</td>
+                <td>${pct(posHits[pos])}%</td>
+                <td>${avg(posRankSum[pos])}</td>
+              </tr>
+
+            `).join("")}
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+      <br>
+
+      <div class="notice">
+        <b>Baseline acak murni:</b>
+        Top ${topN} ≈ ${(topN*10).toFixed(0)}% per posisi,
+        rata-rata rank = 5.5.
+        Jika hasil model tidak melampaui baseline,
+        model tidak lebih baik dari tebakan acak.<br><br>
+        Backtest hanya mengukur seberapa sering digit aktual
+        masuk Top-N historis. Ini bukan bukti bahwa hasil
+        berikutnya dapat diprediksi secara pasti.
+      </div>
+
+    `;
+
+  },50);
+
+}
+
+
+/* =========================================================
+   REBUILD
+========================================================= */
+
+function rebuild(){
+
+  updateStorageStatus();
+
+  renderHistory();
+
+  if(historyData.length){
+
+    const last =
+      historyData[historyData.length-1];
+
+    document.getElementById("last")
+      .value = last;
+
+  }
+
+
+  if(historyData.length < 1){
+
+    document.getElementById("digitFrequency")
+      .innerHTML =
+      `<span class="muted">
+        Belum ada data.
+      </span>`;
+
+    return;
+
+  }
+
+
+  const model =
+    buildModel(historyData);
+
+
+  renderFrequency(model);
+
+  renderPositionFrequency(model);
+
+  renderTransition(model);
+
+  renderTwoStep(model);
+
+}
+
+
+/* =========================================================
+   INIT
+========================================================= */
+
+loadHistory();
+
+rebuild();
+
+
+/*
+  Enter pada kolom hasil = simpan cepat.
+*/
+
+document
+  .getElementById("last")
+  .addEventListener(
+    "keydown",
+    e=>{
+      if(e.key==="Enter") saveLast();
+    }
+  );
+
+
+/*
+  Jika data sudah cukup,
+  otomatis generate.
+*/
+
+if(historyData.length >= 3){
+
+  setTimeout(
+    ()=>generate(),
+    150
+  );
+
+}
+
+</script>
+
+</body>
+</html>
